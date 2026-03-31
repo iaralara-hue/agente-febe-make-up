@@ -85,9 +85,6 @@ async def chat_endpoint(request: ChatRequest):
             except Exception as e:
                 print(f"Falha no modelo {model_name}: {e}")
                 errors[model_name] = e
-                # Se for erro de quota (429), não adianta tentar outro modelo, melhor esperar
-                if "429" in str(e):
-                    break
                 continue
         
         if errors:
