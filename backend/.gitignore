@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info
+list_models.py
+test_all.py
+working_model.txt
+
+.vercel
+.env*.local
