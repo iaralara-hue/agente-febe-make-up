@@ -1,0 +1,10 @@
+d "C:\Users\ESCRITORIO\
+
+streamlit run app.py
+
+
+AIzaSyBCsgLltYMpPUDGqPwZDR9NiRgeSLswbEU
+
+
+
+crie um roteiro de apresentação da empresa Alpha Soluções Condominiais

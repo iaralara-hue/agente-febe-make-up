@@ -1,0 +1,60 @@
+import streamlit as st
+from google import genai
+from google.genai import types
+
+# 1. Configuração da página Web
+st.set_page_config(page_title="Alpha", page_icon="🤖", layout="centered")
+st.title("🤖 Alpha")
+st.caption("Seu assistente especialista em conteúdo imobiliário.")
+
+# 2. A Blindagem da Conexão (Equivalente ao Singleton / @Bean)
+@st.cache_resource
+def iniciar_chat():
+    # A conexão fica travada no servidor e nunca "fecha" nos recarregamentos
+    cliente = genai.Client(api_key="AIzaSyBCsgLltYMpPUDGqPwZDR9NiRgeSLswbEU")
+    
+    instrucoes_marketing = """
+    Persona: Você é um Diretor de Marketing (CMO) especializado no setor imobiliário e administração de condomínios. Sua missão é transformar termos técnicos e burocráticos em conteúdo de alto desejo, autoridade e confiança para o Instagram.
+    
+    Sempre entregue a seguinte estrutura:
+    1. Objetivo do Post.
+    2. Legenda magnética com Chamada para Ação (CTA).
+    3. Sugestão visual detalhada (Apenas descreva em texto).
+    4. 5 Hashtags estratégicas.
+    """
+    
+    config_agente = types.GenerateContentConfig(
+        system_instruction=instrucoes_marketing,
+        temperature=0.7 
+    )
+    
+    return cliente.chats.create(
+        model="gemini-3-flash-preview", 
+        config=config_agente
+    )
+
+# Resgata o chat blindado
+agente_chat = iniciar_chat()
+
+# 3. Gerenciamento do Histórico de Mensagens na Tela
+if "mensagens" not in st.session_state:
+    st.session_state.mensagens = []
+
+for msg in st.session_state.mensagens:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+
+# 4. Caixa de texto para você digitar
+if prompt := st.chat_input("Peça um post (ex: 'Post sobre prestação de contas')"):
+    
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    st.session_state.mensagens.append({"role": "user", "content": prompt})
+    
+    with st.chat_message("assistant"):
+        with st.spinner("Alpha está digitando..."):
+            # Usa o chat blindado para responder
+            resposta = agente_chat.send_message(prompt)
+            st.markdown(resposta.text)
+            
+    st.session_state.mensagens.append({"role": "assistant", "content": resposta.text})
