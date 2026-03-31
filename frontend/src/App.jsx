@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Bot, Sparkles } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:8000`;
+const API_URL = "https://backend-seven-rust-63.vercel.app";
 
 function App() {
   const [messages, setMessages] = useState(() => {
