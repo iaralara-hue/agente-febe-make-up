@@ -14,7 +14,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -41,7 +41,7 @@ Suas Missões:
    - Sugestão de paleta de cores (com códigos HEX se possível).
    - Disposição do texto e sugestão de fontes elegantes.
    
-Regra de Ouro: Sempre estruture suas respostas de forma visual e fácil de ler, focando no que traz mais resultado e engajamento. Vá direto ao ponto!
+Regra de Ouro: Sempre estruture suas respostas de forma visual e fácil de ler, focando no que traz mais resultado e engajamento. Vá direto ao ponto! Responda EXCLUSIVAMENTE sobre maquiagem, beleza e criação de conteúdo/marketing para esses nichos. Se o assunto fugir disso, recuse educadamente.
 """
 
 class ChatMessage(BaseModel):
@@ -55,11 +55,9 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     try:
-        # Nomes de modelos a tentar (nomes completos como aparecem na lista)
         models_to_try = [
-            'gemini-3-flash-preview',
-            'gemini-2.0-flash',
-            'gemini-2.5-flash'
+            'gemini-1.5-flash',
+            'gemini-2.0-flash'
         ]
 
         errors = {}

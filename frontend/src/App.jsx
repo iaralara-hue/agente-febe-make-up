@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Bot, Sparkles } from 'lucide-react';
 
-const API_URL = "https://backend-seven-rust-63.vercel.app";
+const API_URL = "https://febe-api-backend.vercel.app";
 
 function App() {
   const [messages, setMessages] = useState(() => {
